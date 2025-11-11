@@ -1,0 +1,20 @@
+.footer-container {
+  background-color: #0d1117;
+  color: #eaeaea;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+}
+
+.logo-container {
+  justify-self: end;
+}
+
+.logo-container img {
+  width: 100%;
+  max-width: 50px;
+}
+
+.information-container {
+  justify-self: start;
+  align-self: center;
+}

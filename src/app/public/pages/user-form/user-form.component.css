@@ -1,7 +1,12 @@
 .user-form-container{
-  height: 100vh;
-  padding: 15px;
   width: 100%;
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: 1fr auto;
+}
+
+.body-form{
+  padding: 15px;
 }
 
 .greetings-container h1{

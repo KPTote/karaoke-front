@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FooterComponent } from "../../../components/footer/footer.component";
 import userFormFields from '../../data/user-form-fields.json';
 import { PublicService } from '../../services/public.service';
 
@@ -9,7 +10,7 @@ import { PublicService } from '../../services/public.service';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FooterComponent],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css'
 })

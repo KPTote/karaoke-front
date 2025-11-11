@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FooterComponent } from "../../../components/footer/footer.component";
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-confirmation-form',
   standalone: true,
-  imports: [CapitalizePipe],
+  imports: [CapitalizePipe, FooterComponent],
   templateUrl: './confirmation-form.component.html',
   styleUrl: './confirmation-form.component.css'
 })

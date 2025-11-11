@@ -1,6 +1,7 @@
 <div class="confirmation-container">
 
-  <div class="thanks-container">
+  <div class="confirmation-body">
+      <div class="thanks-container">
     @let addComa = user ? ', ' : '';
     <h1>¡Gracias por participar{{addComa}}{{user ?? '' | capitalize}}!</h1>
   </div>
@@ -15,6 +16,11 @@
           <button type="button" class="btn btn-primary" (click)="back()">
         Regresar a formulario
       </button>
+  </div>
+  </div>
+
+  <div class="confirmation-footer">
+    <app-footer></app-footer>
   </div>
 
 </div>

@@ -1,19 +1,24 @@
-.confirmation-container{
-  height: 100vh;
-  padding: 15px;
+.confirmation-container {
   width: 100%;
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: 1fr auto;
 }
 
-.confirmation-container .thanks-container{
-  margin-top: 50px;
+.confirmation-body {
+  padding: 15px;
 }
 
-.confirmation-container .description-container{
+.confirmation-container .thanks-container {
+  margin-top: 10px;
+}
+
+.confirmation-container .description-container {
   display: grid;
   row-gap: 30px;
   margin-top: 50px;
 }
 
-.confirmation-container .button-container{
+.confirmation-container .button-container {
   margin-top: 50px;
 }
