@@ -1,0 +1,67 @@
+<div class="user-form-container">
+  <div class="greetings-container">
+    <h1>¡Hola!</h1>
+    <p>
+      Gracias por participar en el karaoke. Para poder participar es necesario
+      completar el siguiente formulario. Luego, dar click en el botón de enviar.
+    </p>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="userForm" (ngSubmit)="submit()">
+
+      @for(field of userFormFields; track field.id){
+        @let controlName = field.controlName;
+        @let requiredError = userForm.get(controlName)?.errors?.['required'];
+        @let patternError = userForm.get(controlName)?.errors?.['pattern'];
+        @let touched = userForm.get(controlName)?.['touched'];
+        @let showIsInvalidClass = (requiredError || patternError) && touched;
+
+        @if( field.name !=='noArtistName'){
+
+            <div class="form-floating mb-3" [ngClass]="{'is-invalid': showIsInvalidClass}">
+              <input
+                type="input"
+                class="form-control"
+                [ngClass]="{'is-invalid': showIsInvalidClass }"
+                [placeholder]="field.label"
+                [formControlName]="field.controlName"
+                [id]="field.name"
+              />
+              <label [for]="field.name">{{ field.label }}</label>
+            </div>
+
+            @if(showIsInvalidClass){
+              <div class="invalid-feedback">
+                {{patternError ? field.patternError  : field.error}}
+              </div>
+            }
+
+
+      } @else {
+
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [formControlName]="field.controlName"
+                  [id]="field.name"
+                />
+                <label class="form-check-label" [for]="field.name">
+                  {{ field.label }}
+                </label>
+              </div>
+
+      }
+    }
+
+    </form>
+
+    <div class="form-button-container">
+      <button type="button" class="btn btn-primary" (click)="submit()">
+        Enviar
+      </button>
+    </div>
+
+  </div>
+</div>

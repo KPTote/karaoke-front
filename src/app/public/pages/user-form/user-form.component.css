@@ -1,0 +1,32 @@
+.user-form-container{
+  height: 100vh;
+  padding: 15px;
+}
+
+.greetings-container h1{
+  margin: 10px 0;
+}
+
+.greetings-container p{
+  margin:20px 0;
+}
+
+
+.form-container .is-invalid{
+  margin: 0 !important;
+}
+
+.form-container .invalid-feedback{
+  margin-bottom: 10px;
+}
+
+.form-container .form-button-container{
+
+  margin-top: 30px;
+
+  button{
+    width: 100%;
+    max-width: 200px;
+  }
+
+}
