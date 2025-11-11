@@ -5,7 +5,7 @@
     "label": "Tu nombre",
     "controlName": "userName",
     "error": "Debes de ingresar tu nombre.",
-    "patternError": "El nombre no puede contener números o caracteres especiales"
+    "patternError": "No se permiten números o caracteres especiales."
   },
   {
     "id": "1",
@@ -13,25 +13,21 @@
     "label": "Tu apellido",
     "controlName": "userLastName",
     "error": "Debes de ingresar tu apellido.",
-    "patternError": "El nombre no puede contener números o caracteres especiales"
+    "patternError": "No se permiten números o caracteres especiales."
   },
   {
     "id": "2",
     "name": "songName",
     "label": "Nombre de la canción",
     "controlName": "songName",
-    "error": "Debes de ingresar el nombre de la canción"
+    "error": "Debes de ingresar el nombre de la canción",
+    "patternError": "No se permiten caracteres especiales."
   },
   {
     "id": "3",
     "name": "artistName",
     "label": "Nombre del artista o banda",
-    "controlName": "artistName"
-  },
-  {
-    "id": "4",
-    "name": "noArtistName",
-    "label": "No recuerdo el nombre del artista o banda",
-    "controlName": "noArtistName"
+    "controlName": "artistName",
+    "patternError": "No se permiten caracteres especiales."
   }
 ]

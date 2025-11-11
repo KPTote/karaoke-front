@@ -1,0 +1,19 @@
+.confirmation-container{
+  height: 100vh;
+  padding: 15px;
+  width: 100%;
+}
+
+.confirmation-container .thanks-container{
+  margin-top: 50px;
+}
+
+.confirmation-container .description-container{
+  display: grid;
+  row-gap: 30px;
+  margin-top: 50px;
+}
+
+.confirmation-container .button-container{
+  margin-top: 50px;
+}

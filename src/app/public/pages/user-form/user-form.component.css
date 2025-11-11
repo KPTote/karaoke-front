@@ -1,6 +1,7 @@
 .user-form-container{
   height: 100vh;
   padding: 15px;
+  width: 100%;
 }
 
 .greetings-container h1{
