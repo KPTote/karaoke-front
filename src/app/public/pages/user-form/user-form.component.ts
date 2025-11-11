@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import userFormFields from '../../data/user-form-fields.json';
+import { PublicService } from '../../services/public.service';
 
 
 @Component({
@@ -14,12 +15,16 @@ import userFormFields from '../../data/user-form-fields.json';
 })
 export class UserFormComponent {
 
-
   public readonly userFormFields = userFormFields;
   public songFormInvalid = false;
 
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
+  private readonly publicService = inject(PublicService);
+
+  constructor() {
+    this.publicService.accessToConfirmationForm(false);
+  }
 
   public userForm: FormGroup = this.fb.group({
     userName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$')]],
@@ -28,7 +33,6 @@ export class UserFormComponent {
     artistName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ0-9\\s]+$')]],
     noArtistName: [false]
   });
-
 
   public submit(): void {
 
@@ -45,6 +49,7 @@ export class UserFormComponent {
       }
     })
 
+    this.publicService.accessToConfirmationForm(true);
 
   }
 

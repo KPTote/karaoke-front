@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { confirmationFormGuard } from "./guards/confirmation-form.guard";
 import { ConfirmationFormComponent } from './pages/confirmation-form/confirmation-form.component';
 import { UserFormComponent } from "./pages/user-form/user-form.component";
 
@@ -9,7 +10,8 @@ export const publicRoutes: Routes = [
   },
   {
     path: 'confirmation-form',
-    component: ConfirmationFormComponent
+    component: ConfirmationFormComponent,
+    canActivate: [confirmationFormGuard]
   },
   {
     path: '**',

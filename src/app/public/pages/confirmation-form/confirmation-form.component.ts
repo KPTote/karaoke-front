@@ -23,15 +23,15 @@ export class ConfirmationFormComponent implements OnInit {
     this.getFormData();
   }
 
-  private getFormData(): void{
+  private getFormData(): void {
 
     this.user = this.activatedRoute.snapshot.queryParams['user'] ?? '';
     this.songName = this.activatedRoute.snapshot.queryParams['songName'] ?? '';
     this.artistName = this.activatedRoute.snapshot.queryParams['artistName'] ?? '';
   }
 
-  public back(): void{
-    this.router.navigate(['/public/user-form']).finally(() => {});
+  public back(): void {
+    this.router.navigate(['/public/user-form']).finally(() => { });
   }
 
 }
