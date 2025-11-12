@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { FooterComponent } from "../../../components/footer/footer.component";
 import userFormFields from '../../data/user-form-fields.json';
+import { UserFormFields } from '../../interfaces/public.interface';
 import { PublicService } from '../../services/public.service';
 
 
@@ -16,7 +17,7 @@ import { PublicService } from '../../services/public.service';
 })
 export class UserFormComponent {
 
-  public readonly userFormFields = userFormFields;
+  public readonly userFormFields: UserFormFields[] = userFormFields;
   public songFormInvalid = false;
 
   private readonly fb = inject(FormBuilder);

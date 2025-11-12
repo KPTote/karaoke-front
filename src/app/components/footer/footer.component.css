@@ -1,12 +1,8 @@
 .footer-container {
   background-color: #0d1117;
   color: #eaeaea;
-  display: grid;
-  grid-template-columns: 100px 1fr;
-}
-
-.logo-container {
-  justify-self: end;
+  display: flex;
+  justify-content: center;
 }
 
 .logo-container img {
@@ -15,6 +11,5 @@
 }
 
 .information-container {
-  justify-self: start;
-  align-self: center;
+  align-content: center;
 }

@@ -20,7 +20,7 @@
     "name": "songName",
     "label": "Nombre de la canción",
     "controlName": "songName",
-    "error": "Debes de ingresar el nombre de la canción",
+    "error": "Debes de ingresar el nombre de la canción.",
     "patternError": "No se permiten caracteres especiales."
   },
   {
@@ -28,6 +28,7 @@
     "name": "artistName",
     "label": "Nombre del artista o banda",
     "controlName": "artistName",
+    "error": "Debes de ingresar el nombre del artista o banda.",
     "patternError": "No se permiten caracteres especiales."
   }
 ]
