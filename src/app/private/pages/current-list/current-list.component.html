@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        @for(song of songList; track song.id){ @let idElement = 'id-element-' +
+        @for(song of songList$ | async; track song.id){ @let idElement = 'id-element-' +
         song.id;
         <tr>
           <th scope="row">{{ song.id }}</th>
@@ -58,7 +58,7 @@
         }
       </tbody>
     </table>
-    @if(songList.length <= 0){
+    @if(((songList$ | async)?.length ?? []) === 0){
     <div class="alert-container">
       <span>No hay canciones agregadas a la lista.</span>
     </div>

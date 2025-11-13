@@ -1,5 +1,5 @@
-import { Component, ElementRef, inject, OnInit } from '@angular/core';
-import { Song } from '../../../interface/karaoke.interface';
+import { AsyncPipe } from '@angular/common';
+import { Component, ElementRef, inject } from '@angular/core';
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { currentListTableHeaders } from '../../data/current-list-headers';
 import { PrivateService } from '../../services/private.service';
@@ -7,14 +7,13 @@ import { PrivateService } from '../../services/private.service';
 @Component({
   selector: 'app-current-list',
   standalone: true,
-  imports: [CapitalizePipe],
+  imports: [CapitalizePipe, AsyncPipe],
   templateUrl: './current-list.component.html',
   styleUrl: './current-list.component.css'
 })
-export class CurrentListComponent implements OnInit {
+export class CurrentListComponent {
 
   public tableHeaders = currentListTableHeaders;
-  public songList: Song[] = [];
   public activeClassCompleted = false;
   public songId = 0;
   private readonly markAsCompletedClassName = 'markAsCompleted';
@@ -23,14 +22,7 @@ export class CurrentListComponent implements OnInit {
   private privateService = inject(PrivateService);
   private elementRef = inject(ElementRef);
 
-
-  ngOnInit(): void {
-    this.getSongList();
-  }
-
-  private getSongList(): void {
-    this.songList = this.privateService.getSongList();
-  }
+  public songList$ = this.privateService.watchChangesOnSongList();
 
   public markAsComplete(songId: number): void {
     this.accessToElement(songId, 'add', this.markAsCompletedClassName);
