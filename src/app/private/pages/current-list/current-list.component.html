@@ -1,34 +1,26 @@
-<app-navbar></app-navbar>
-<div class="table-container">
-  <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>John</td>
-      <td>Doe</td>
-      <td>social</td>
-    </tr>
-  </tbody>
-</table>
+<div class="current-list-container">
+  <h1>Lista actual</h1>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          @for(header of tableHeaders; track header ){
+          <th scope="col">{{ header }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for(song of songList; track song.id){
+        <tr>
+          <th scope="row">{{ song.id }}</th>
+          <td>{{ song.songName | capitalize }}</td>
+          <td>{{ song.artistName | capitalize}}</td>
+          <td>{{ song.userName | capitalize }}</td>
+          <td><button type="button" class="btn btn-success">Completar</button></td>
+          <td><button type="button" class="btn btn-danger">Eliminar</button></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>
-

@@ -43,22 +43,38 @@ export class UserFormComponent {
       return;
     }
 
+
+    const numberOnList = this.generateId();
+    this.addSongToPlaylist(numberOnList);
+    this.navigateTo(numberOnList);
+    this.publicService.accessToConfirmationForm(true);
+
+
+  }
+
+  private navigateTo(numberOnList: number): void {
     this.router.navigate(['/public/confirmation-form'], {
       queryParams: {
         user: this.userForm?.controls['userName']?.value ?? null,
         songName: this.userForm?.controls['songName']?.value ?? null,
         artistName: this.userForm?.controls['artistName']?.value ?? null,
+        numberOnList
       }
     })
-
-    this.publicService.accessToConfirmationForm(true);
-
   }
 
-  private getName(): string {
-    const userName = this.userForm?.controls['userName']?.value ?? null;
-    const userLastName = this.userForm?.controls['userLastName']?.value ?? null;
-    return `${userName} ${userLastName}`;
+  private addSongToPlaylist(id: number): void {
+    this.publicService.addSongToPlayList({
+      id,
+      songName: this.userForm?.controls['songName']?.value ?? null,
+      artistName: this.userForm?.controls['artistName']?.value ?? null,
+      userName: this.userForm?.controls['userName']?.value ?? null,
+    });
+  }
+
+  private generateId(): number {
+    console.log(this.publicService.getNumberOfSong());
+    return this.publicService.getNumberOfSong() + 1;
   }
 
 }

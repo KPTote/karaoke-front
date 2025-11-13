@@ -1,5 +1,7 @@
 import { Routes } from "@angular/router";
 import { CurrentListComponent } from "./pages/current-list/current-list.component";
+import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+import { HistoryComponent } from "./pages/history/history.component";
 import { LoginComponent } from "./pages/login/login.component";
 
 
@@ -9,8 +11,23 @@ export const privateRoutes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'current-list',
-    component: CurrentListComponent
+    path: 'dashboard',
+    component: DashboardComponent,
+    title: 'Dashboard',
+    children: [
+      {
+        path: 'current-list',
+        component: CurrentListComponent
+      },
+      {
+        path: 'history',
+        component: HistoryComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'current-list'
+      }
+    ]
   },
   {
     path: '**',
