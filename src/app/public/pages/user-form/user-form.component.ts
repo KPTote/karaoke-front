@@ -68,13 +68,19 @@ export class UserFormComponent {
       id,
       songName: this.userForm?.controls['songName']?.value ?? null,
       artistName: this.userForm?.controls['artistName']?.value ?? null,
-      userName: this.userForm?.controls['userName']?.value ?? null,
+      userName: this.getUserName(),
     });
   }
 
   private generateId(): number {
     console.log(this.publicService.getNumberOfSong());
     return this.publicService.getNumberOfSong() + 1;
+  }
+
+  private getUserName(): string {
+    const userName = this.userForm?.controls['userName']?.value ?? null;
+    const userLastName = this.userForm?.controls['userLastName']?.value ?? null;
+    return `${userName} ${userLastName}`;
   }
 
 }

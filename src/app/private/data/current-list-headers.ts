@@ -4,5 +4,6 @@ export const currentListTableHeaders = [
   'Nombre del artista',
   'Nombre del participante',
   'Marcar cómo completada',
-  'Marcar cómo eliminada'
+  'Marcar cómo eliminada',
+  'Resetear'
 ];

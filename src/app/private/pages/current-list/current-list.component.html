@@ -4,23 +4,64 @@
     <table class="table">
       <thead>
         <tr>
-          @for(header of tableHeaders; track header ){
-          <th scope="col">{{ header }}</th>
+          @for(header of tableHeaders; track header; let idx = $index){ @let
+          classNameHead = 'column-' + idx + '-header';
+          <th scope="col" [class]="classNameHead">{{ header }}</th>
           }
         </tr>
       </thead>
       <tbody>
-        @for(song of songList; track song.id){
+        @for(song of songList; track song.id){ @let idElement = 'id-element-' +
+        song.id;
         <tr>
           <th scope="row">{{ song.id }}</th>
-          <td>{{ song.songName | capitalize }}</td>
-          <td>{{ song.artistName | capitalize}}</td>
-          <td>{{ song.userName | capitalize }}</td>
-          <td><button type="button" class="btn btn-success">Completar</button></td>
-          <td><button type="button" class="btn btn-danger">Eliminar</button></td>
+          <td [id]="idElement + '-column-1'">
+            div{{ song.songName | capitalize }}
+          </td>
+          <td [id]="idElement + '-column-2'">
+            {{ song.artistName | capitalize }}
+          </td>
+          <td [id]="idElement + '-column-3'" class="value-column">
+            {{ song.userName | capitalize }}
+          </td>
+          <td class="column-buttons">
+            <button
+              type="button"
+              class="btn btn-success"
+              id="btn-complete"
+              (click)="markAsComplete(song.id)"
+            >
+              Completar
+            </button>
+          </td>
+          <td class="column-buttons">
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="btn-delete"
+              (click)="markAsDelete(song.id)"
+            >
+              Eliminar
+            </button>
+          </td>
+          <td class="value-column">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [id]="songId"
+              (click)="resetElement(song.id)"
+            >
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+          </td>
         </tr>
         }
       </tbody>
     </table>
+    @if(songList.length <= 0){
+    <div class="alert-container">
+      <span>No hay canciones agregadas a la lista.</span>
+    </div>
+    }
   </div>
 </div>

@@ -1,10 +1,64 @@
+.current-list-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.current-list-container .alert-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #ffc107;
+  text-align: center;
+  border-radius: 3px;
+}
+
 .current-list-container .table-container {
   scroll-behavior: smooth;
   overflow: scroll;
+  margin-top: 30px;
+}
+
+.current-list-container .column-3-header,
+.current-list-container .column-4-header,
+.current-list-container .column-5-header,
+.current-list-container .column-6-header {
+  text-align: center;
+}
+
+.current-list-container .value-column {
+  text-align: center;
+}
+
+.column-buttons {
+  text-align: center;
+}
+
+.markAsCompleted {
+  background: linear-gradient(
+    to bottom,
+    transparent 49%,
+    #198754 49%,
+    #198754 51%,
+    transparent 51%
+  );
+}
+
+.markAsDeleted {
+  background: linear-gradient(
+    to bottom,
+    transparent 49%,
+    #dc3545 49%,
+    #dc3545 51%,
+    transparent 51%
+  );
 }
 
 @media only screen and (min-width: 800px) {
   .current-list-container .table-container {
     overflow: hidden;
+    overflow-y: auto;
+    height: 600px;
   }
 }
