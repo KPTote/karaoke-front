@@ -3,7 +3,7 @@
   <div>
     <app-filter (filterChange)="onFilterChanged($event)"></app-filter>
   </div>
-  <div class="table-container">
+  <div class="table-container scroll-tables">
     <table class="table">
       <thead>
         <tr>
@@ -14,8 +14,8 @@
         </tr>
       </thead>
       <tbody>
-        @for(song of songList$ | async; track song.id){ @let idElement = 'id-element-' +
-        song.id;
+        @for(song of songList$ | async; track song.id){ @let idElement =
+        'id-element-' + song.id;
         <tr>
           <th scope="row">{{ song.id }}</th>
           <td [id]="idElement + '-column-1'">
@@ -62,8 +62,11 @@
       </tbody>
     </table>
     @if(((songList$ | async)?.length ?? []) === 0){
-    <div>
-      <app-alert [message]="'No hay canciones agregadas a la lista.'" [typeAlert]="'warning'" ></app-alert>
+    <div class="current-list-alert">
+      <app-alert
+        [message]="'No hay canciones agregadas a la lista.'"
+        [typeAlert]="'warning'"
+      ></app-alert>
     </div>
     }
   </div>

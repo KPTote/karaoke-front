@@ -1,26 +1,29 @@
 <div class="history-container private-tables">
   <h1>Historial</h1>
-  <div class="table-container">
+  <div class="table-container scroll-tables">
     <table class="table">
       <thead>
         <tr>
           @for(header of tableHeaders; track header;){
-          <th scope="col" style="text-align: center;">{{ header }}</th>
+          <th scope="col" style="text-align: center">{{ header }}</th>
           }
         </tr>
       </thead>
       <tbody>
         @for(item of fakeData; track item.id){
         <tr>
-          <td style="text-align: center;">{{item.id}}</td>
-          <td style="text-align: center;">{{item.songName}}</td>
-          <td style="text-align: center;">{{item.artistName}}</td>
-          <td style="text-align: center;">{{item.userName}}</td>
-          <td style="text-align: center;">{{item.date}}</td>
-          <td style="text-align: center;">{{item.time}}</td>
+          <td style="text-align: center">{{ item.id }}</td>
+          <td style="text-align: center">{{ item.songName }}</td>
+          <td style="text-align: center">{{ item.artistName }}</td>
+          <td style="text-align: center">{{ item.userName }}</td>
+          <td style="text-align: center">{{ item.date }}</td>
+          <td style="text-align: center">{{ item.time }}</td>
         </tr>
         }
       </tbody>
     </table>
+  </div>
+  <div class="button-container">
+    <button type="button" class="btn btn-secondary">Secondary</button>
   </div>
 </div>
