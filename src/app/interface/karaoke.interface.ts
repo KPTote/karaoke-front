@@ -4,3 +4,8 @@ export interface Song{
   artistName: string;
   userName: string;
 }
+
+export interface HistoryItem extends Song{
+  date: string;
+  time: string;
+}

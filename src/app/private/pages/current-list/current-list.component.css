@@ -1,10 +1,3 @@
-.current-list-container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 30px;
-}
-
 .current-list-container .alert-container {
   width: 100%;
   max-width: 1000px;

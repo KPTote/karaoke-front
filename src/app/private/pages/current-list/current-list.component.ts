@@ -1,5 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, ElementRef, inject } from '@angular/core';
+import { AlertComponent } from "../../../components/alert/alert.component";
+import { FilterComponent } from "../../../components/filter/filter.component";
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { currentListTableHeaders } from '../../data/current-list-headers';
 import { PrivateService } from '../../services/private.service';
@@ -7,7 +9,7 @@ import { PrivateService } from '../../services/private.service';
 @Component({
   selector: 'app-current-list',
   standalone: true,
-  imports: [CapitalizePipe, AsyncPipe],
+  imports: [CapitalizePipe, AsyncPipe, FilterComponent, AlertComponent],
   templateUrl: './current-list.component.html',
   styleUrl: './current-list.component.css'
 })
@@ -47,5 +49,9 @@ export class CurrentListComponent {
 
     };
   };
+
+   public onFilterChanged(filterValue: string): void {
+    console.log(filterValue);
+  }
 
 }

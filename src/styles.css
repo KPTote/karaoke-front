@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+.private-tables {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+}

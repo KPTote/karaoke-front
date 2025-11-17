@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   template: `
 <div class="navbar-container">
   <nav>
@@ -18,8 +19,8 @@ import { Component } from '@angular/core';
     </div>
 
     <ul>
-      <li><a routerLink="/" >Lista actual</a></li>
-      <li><a routerLink="/" >Historial</a></li>
+      <li><a routerLink="current-list" routerLinkActive="current-page"  >Lista actual</a></li>
+      <li><a routerLink="history" routerLinkActive="current-page" >Historial</a></li>
       <li><a (click)="logOut()" class="navbar__logout">Cerrar sesión</a></li>
     </ul>
   </nav>
@@ -27,6 +28,10 @@ import { Component } from '@angular/core';
 
   `,
   styles: `
+
+  .navbar-container ul li a.current-page{
+      color: #0066FF;
+  }
 
 * {
   padding: 0;
@@ -133,7 +138,7 @@ nav ul li a:hover {
 
   a:hover,
   a.active {
-    color: yellow;
+  color: #0066FF;
   }
 
   #check:checked ~ ul {
@@ -144,6 +149,8 @@ nav ul li a:hover {
     cursor: pointer;
   }
 }
+
+
 
   `
 })

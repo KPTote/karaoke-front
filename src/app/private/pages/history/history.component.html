@@ -1,36 +1,26 @@
-<div class="history-container">
+<div class="history-container private-tables">
   <h1>Historial</h1>
   <div class="table-container">
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          @for(header of tableHeaders; track header;){
+          <th scope="col" style="text-align: center;">{{ header }}</th>
+          }
         </tr>
       </thead>
       <tbody>
+        @for(item of fakeData; track item.id){
         <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>mdo</td>
+          <td style="text-align: center;">{{item.id}}</td>
+          <td style="text-align: center;">{{item.songName}}</td>
+          <td style="text-align: center;">{{item.artistName}}</td>
+          <td style="text-align: center;">{{item.userName}}</td>
+          <td style="text-align: center;">{{item.date}}</td>
+          <td style="text-align: center;">{{item.time}}</td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>John</td>
-          <td>Doe</td>
-          <td>social</td>
-        </tr>
+        }
       </tbody>
     </table>
   </div>
 </div>
-

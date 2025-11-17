@@ -1,5 +1,8 @@
-<div class="current-list-container">
+<div class="current-list-container private-tables">
   <h1>Lista actual</h1>
+  <div>
+    <app-filter (filterChange)="onFilterChanged($event)"></app-filter>
+  </div>
   <div class="table-container">
     <table class="table">
       <thead>
@@ -59,8 +62,8 @@
       </tbody>
     </table>
     @if(((songList$ | async)?.length ?? []) === 0){
-    <div class="alert-container">
-      <span>No hay canciones agregadas a la lista.</span>
+    <div>
+      <app-alert [message]="'No hay canciones agregadas a la lista.'" [typeAlert]="'warning'" ></app-alert>
     </div>
     }
   </div>
