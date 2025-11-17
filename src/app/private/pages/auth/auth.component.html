@@ -1,0 +1,76 @@
+<div class="login-container">
+  <div class="login__form">
+    <div class="login__form-title">
+      <h1>Karaoke Dashboard</h1>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="login__form-inputs">
+        <div class="login__form-inputs-email">
+          <input
+            type="text"
+            formControlName="email"
+            placeholder="Email"
+            id="email"
+            autocomplete="off"
+          />
+
+          @if(email?.invalid && (email?.dirty || email?.touched)){
+          <div class="login__form-errors">
+            @if(email?.hasError('required')){
+            <span class="login__form-errors_msg"
+              >Por favor completa este campo</span
+            >
+            } @if(email?.hasError('email')){
+            <span class="login__form-errors_msg"
+              >Por favor introduce un correo electrónico válido</span
+            >
+            } @if(email?.hasError('maxlength')){
+            <span class="login__form-errors_msg">
+              El correo electrónico excede el límite de caracteres permitidos
+            </span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="login__form-inputs-password">
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Password"
+            id="password"
+          />
+
+          @if(password?.invalid && (password?.dirty || password?.touched)){
+          <div class="login__form-errors">
+            @if(password?.hasError('required')){
+            <span class="login__form-errors_msg"
+              >Por favor completa este campo</span
+            >
+            } @if(password?.hasError('minlength')){
+            <span class="login__form-errors_msg"
+              >La contraseña debe tener al menos 8 caracteres</span
+            >
+            }
+          </div>
+          }
+        </div>
+
+        @if(!isValidAccount){
+        <div class="login__form-unauthorized">
+          <span>{{ errorMessage }}</span>
+        </div>
+        }
+      </div>
+
+      <div class="login__form-button">
+        @if (!showLoader) {
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        } @else {
+        <app-loader />
+        }
+      </div>
+    </form>
+  </div>
+</div>
