@@ -3,4 +3,11 @@
   margin-top: 25px;
 }
 
+.history-container .button-container button{
+  background: #0d1117;
+}
 
+
+.history-container .button-container button:hover{
+  color: #0066FF;
+}
