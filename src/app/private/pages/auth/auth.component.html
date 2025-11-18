@@ -1,76 +1,84 @@
 <div class="login-container">
-  <div class="login__form">
-    <div class="login__form-title">
+  <div class="login">
+    <div class="login__title">
       <h1>Karaoke Dashboard</h1>
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="login__form-inputs">
-        <div class="login__form-inputs-email">
-          <input
-            type="text"
-            formControlName="email"
-            placeholder="Email"
-            id="email"
-            autocomplete="off"
-          />
-
-          @if(email?.invalid && (email?.dirty || email?.touched)){
-          <div class="login__form-errors">
-            @if(email?.hasError('required')){
-            <span class="login__form-errors_msg"
-              >Por favor completa este campo</span
-            >
-            } @if(email?.hasError('email')){
-            <span class="login__form-errors_msg"
-              >Por favor introduce un correo electrónico válido</span
-            >
-            } @if(email?.hasError('maxlength')){
-            <span class="login__form-errors_msg">
-              El correo electrónico excede el límite de caracteres permitidos
-            </span>
-            }
+    <div class="login__form">
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <div class="login__form-email">
+          @let requiredEmailError = loginForm.get('email')?.errors?.['required'];
+          @let emailTouched = loginForm.get('email')?.['touched'];
+          @let invalidEmail = loginForm.get('email')?.errors?.['email'];
+          @let maxLengthErrorEmail = loginForm.get('email')?.errors?.['maxlength'];
+          @let activeInvalidClass = (requiredEmailError || invalidEmail || maxLengthErrorEmail) && emailTouched;
+          <div
+            class="form-floating mb-3"
+            [ngClass]="{ 'is-invalid': activeInvalidClass }"
+          >
+            <input
+              type="input"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': activeInvalidClass }"
+              formControlName="email"
+              placeholder="Email"
+              id="email"
+              autocomplete="off"
+            />
+            <label for="email">Email</label>
           </div>
+          @if(requiredEmailError){
+          <div class="invalid-feedback">Ingresa tu correo electrónico.</div>
+          }
+
+          @if(invalidEmail){
+          <div class="invalid-feedback">El correo electrónico es inválido.</div>
+          }
+
+          @if(maxLengthErrorEmail){
+          <div class="invalid-feedback">El correo electrónico supera el máximo permitido.</div>
+          }
+
+        </div>
+
+        <div class="login__form-password">
+          @let requiredPassError = loginForm.get('password')?.errors?.['required'];
+          @let minlengthPassError = loginForm.get('password')?.errors?.['minlength'];
+          @let passwordTouched = loginForm.get('password')?.['touched'];
+          @let activePassError = (requiredPassError || minlengthPassError) && passwordTouched;
+
+          <div
+            class="form-floating mb-3"
+            [ngClass]="{ 'is-invalid': activePassError }"
+          >
+            <input
+              type="password"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': activePassError }"
+              formControlName="password"
+              placeholder="Contraseña"
+              id="password"
+              autocomplete="off"
+            />
+            <label for="email">Contraseña</label>
+          </div>
+          @if(requiredPassError){
+          <div class="invalid-feedback">Ingresa tu contraseña.</div>
+          }
+
+          @if(minlengthPassError){
+          <div class="invalid-feedback">La contraseña debe tener al menos 8 caracteres.</div>
           }
         </div>
 
-        <div class="login__form-inputs-password">
-          <input
-            type="password"
-            formControlName="password"
-            placeholder="Password"
-            id="password"
-          />
-
-          @if(password?.invalid && (password?.dirty || password?.touched)){
-          <div class="login__form-errors">
-            @if(password?.hasError('required')){
-            <span class="login__form-errors_msg"
-              >Por favor completa este campo</span
-            >
-            } @if(password?.hasError('minlength')){
-            <span class="login__form-errors_msg"
-              >La contraseña debe tener al menos 8 caracteres</span
-            >
-            }
-          </div>
+        <div class="login__form-button">
+          @if (!showLoader) {
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+          } @else {
+          <app-loader />
           }
         </div>
-
-        @if(!isValidAccount){
-        <div class="login__form-unauthorized">
-          <span>{{ errorMessage }}</span>
-        </div>
-        }
-      </div>
-
-      <div class="login__form-button">
-        @if (!showLoader) {
-        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-        } @else {
-        <app-loader />
-        }
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

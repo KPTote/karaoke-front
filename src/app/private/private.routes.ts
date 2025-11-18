@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { dashboardGuard } from "./guards/dashboard.guard";
 import { AuthComponent } from "./pages/auth/auth.component";
 import { CurrentListComponent } from "./pages/current-list/current-list.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
@@ -12,6 +13,7 @@ export const privateRoutes: Routes = [
   },
   {
     path: 'dashboard',
+    canActivate: [dashboardGuard],
     component: DashboardComponent,
     title: 'Dashboard',
     children: [

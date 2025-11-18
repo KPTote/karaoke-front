@@ -1,0 +1,18 @@
+[
+  {
+    "id": "0",
+    "name": "email",
+    "label": "Correo electrónico",
+    "controlName": "email",
+    "requiredError": "Debes de ingresar tu correo electrónico.",
+    "patternError": "Correo electrónico inválido."
+  },
+  {
+    "id": "1",
+    "name": "password",
+    "label": "Contraseña",
+    "controlName": "password",
+    "error": "Debes de ingresar tu contraseña.",
+    "minlengthError": "La contraseña debe tener al menos 8 caracteres"
+  }
+]

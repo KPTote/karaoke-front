@@ -1,26 +1,33 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoaderComponent } from "../../../components/loader/loader.component";
+import loginField from '../../data/login-fields.json';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [ReactiveFormsModule, LoaderComponent],
+  imports: [ReactiveFormsModule, LoaderComponent, CommonModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
-export class AuthComponent {
+export class AuthComponent  {
 
-  maxLengthEmail = 100;
-  minLengthPass = 8;
+
+  private readonly maxLengthEmail = 100;
+  private readonly minLengthPass = 8;
   isValidAccount = true;
   errorMessage = '';
   public showLoader = false;
+  public loginFields = loginField;
 
-  public loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.maxLength(this.maxLengthEmail), Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(this.minLengthPass)])
+  private readonly fb = inject(FormBuilder);
+
+
+  public loginForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.maxLength(this.maxLengthEmail), Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(this.minLengthPass)]]
   });
 
   get email() {
@@ -33,15 +40,21 @@ export class AuthComponent {
 
   private readonly router = inject(Router);
 
-    onSubmit() {
+  public submit(): void {
 
-    if (!this.loginForm?.valid) return;
+    if (!this.loginForm?.valid) {
+      this.loginForm.markAllAsTouched()
+      return;
+    };
+
+    console.log(this.loginForm.valid);
 
     const email = this.email?.value ?? '';
-    const pass = this.password?.value ?? '';
 
-    console.log(email);
-    console.log(pass);
+    sessionStorage.setItem('token', email);
+
+    this.router.navigate(['/private/dashboard']);
+
 
 
 
