@@ -1,10 +1,11 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, ElementRef, inject } from '@angular/core';
+import { Component, ElementRef, inject, OnInit } from '@angular/core';
 import { AlertComponent } from "../../../components/alert/alert.component";
 import { FilterComponent } from "../../../components/filter/filter.component";
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { currentListTableHeaders } from '../../data/current-list-headers';
 import { PrivateService } from '../../services/private.service';
+import { SocketClientService } from '../../services/socket-client.service';
 
 @Component({
   selector: 'app-current-list',
@@ -13,7 +14,7 @@ import { PrivateService } from '../../services/private.service';
   templateUrl: './current-list.component.html',
   styleUrl: './current-list.component.css'
 })
-export class CurrentListComponent {
+export class CurrentListComponent implements OnInit {
 
   public tableHeaders = currentListTableHeaders;
   public activeClassCompleted = false;
@@ -23,8 +24,13 @@ export class CurrentListComponent {
 
   private privateService = inject(PrivateService);
   private elementRef = inject(ElementRef);
+  private socketClientService = inject(SocketClientService);
 
   public songList$ = this.privateService.watchChangesOnSongList();
+
+  ngOnInit(): void {
+    this.socketClientService.connectToWebSockets()
+  }
 
   public markAsComplete(songId: number): void {
     this.accessToElement(songId, 'add', this.markAsCompletedClassName);
