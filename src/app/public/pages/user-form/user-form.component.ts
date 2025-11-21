@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FooterComponent } from "../../../components/footer/footer.component";
+import { FormComponent } from "../../../components/form/form.component";
+import { FormSettings, FormStructure } from '../../../interface/karaoke.interface';
 import { AddSongRequest } from '../../../private/interfaces/private.interface';
 import userFormFields from '../../data/user-form-fields.json';
 import { UserFormFields } from '../../interfaces/public.interface';
@@ -13,7 +15,7 @@ import { PublicService } from '../../services/public.service';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, FooterComponent, FormComponent],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css'
 })
@@ -21,6 +23,17 @@ export class UserFormComponent {
 
   public readonly userFormFields: UserFormFields[] = userFormFields;
   public songFormInvalid = false;
+  public formSettings: FormSettings = {
+    showTitle: true,
+    showDescription: true,
+    title: '¡Hola!',
+    description: `Gracias por participar en el karaoke. Para poder participar es necesario completar el siguiente formulario. Luego, dar click en el botón de enviar.`
+  };
+
+  private userName = '';
+  private userLastName = '';
+  private songName = '';
+  private artistName = '';
 
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
@@ -31,20 +44,15 @@ export class UserFormComponent {
     this.publicService.accessToConfirmationForm(false);
   }
 
-  public userForm: FormGroup = this.fb.group({
-    userName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$')]],
-    userLastName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$')]],
-    songName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ0-9\\s]+$')]],
-    artistName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ0-9\\s]+$')]],
-    noArtistName: [false]
-  });
 
-  public submit(): void {
+  public submit(formValue: FormStructure): void {
 
-    if (!this.userForm.valid) {
-      this.userForm.markAllAsTouched()
-      return;
-    }
+    const { userName, userLastName, songName, artistName } = formValue;
+
+    this.userName = userName;
+    this.userLastName = userLastName;
+    this.songName = songName;
+    this.artistName = artistName;
 
     this.generateId();
 
@@ -53,9 +61,9 @@ export class UserFormComponent {
   private navigateTo(numberOnList: number): void {
     this.router.navigate(['/public/confirmation-form'], {
       queryParams: {
-        user: this.userForm?.controls['userName']?.value ?? null,
-        songName: this.userForm?.controls['songName']?.value ?? null,
-        artistName: this.userForm?.controls['artistName']?.value ?? null,
+        user: this.userName,
+        songName: this.songName,
+        artistName: this.artistName,
         numberOnList
       }
     })
@@ -65,8 +73,8 @@ export class UserFormComponent {
 
     const req: AddSongRequest = {
       numberOnList,
-      songName: this.userForm?.controls['songName']?.value ?? null,
-      artistName: this.userForm?.controls['artistName']?.value ?? null,
+      songName: this.songName,
+      artistName: this.artistName,
       userName: this.getUserName(),
     }
 
@@ -81,9 +89,7 @@ export class UserFormComponent {
   }
 
   private getUserName(): string {
-    const userName = this.userForm?.controls['userName']?.value ?? null;
-    const userLastName = this.userForm?.controls['userLastName']?.value ?? null;
-    return `${userName} ${userLastName}`;
+    return `${this.userName} ${this.userLastName}`;
   }
 
   private generateId(): void {

@@ -1,0 +1,51 @@
+.form-container{
+  width: 100%;
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: 1fr auto;
+}
+
+.body-form{
+  padding: 15px;
+}
+
+.greetings-container h1{
+  margin: 10px 0;
+}
+
+.greetings-container p{
+  margin:20px 0;
+}
+
+
+.form-inputs-container .is-invalid{
+  margin: 0 !important;
+}
+
+.form-inputs-container .invalid-feedback{
+  margin-bottom: 10px;
+}
+
+.form-inputs-container .form-button-container{
+
+  margin-top: 30px;
+
+  button{
+    width: 100%;
+    max-width: 200px;
+  }
+
+}
+
+
+@media only screen and (min-width:600px){
+
+
+.body-form{
+  width: 100%;
+  max-width: 600px;
+  justify-self: center;
+}
+
+
+}
