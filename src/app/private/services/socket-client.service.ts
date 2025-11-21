@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { WSocketRes } from '../interfaces/private.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketClientService {
 
+  private messageSubject = new Subject<WSocketRes>();
+  public message$: Observable<WSocketRes> = this.messageSubject.asObservable();
+
   public connectToWebSockets() {
 
     const socket = new WebSocket('ws://localhost:3000/ws');
 
     socket.onmessage = (event) => {
-      console.log(event.data); //onSongAdd
+      this.messageSubject.next(JSON.parse(event.data));
     };
 
     socket.onclose = (event) => {
@@ -27,4 +32,5 @@ export class SocketClientService {
     };
 
   }
+
 }

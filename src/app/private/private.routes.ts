@@ -4,6 +4,7 @@ import { AuthComponent } from "./pages/auth/auth.component";
 import { CurrentListComponent } from "./pages/current-list/current-list.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { HistoryComponent } from "./pages/history/history.component";
+import { currentListResolver } from "./resolvers/current-list.resolver";
 
 
 export const privateRoutes: Routes = [
@@ -19,7 +20,10 @@ export const privateRoutes: Routes = [
     children: [
       {
         path: 'current-list',
-        component: CurrentListComponent
+        component: CurrentListComponent,
+        resolve: {
+          playlist: currentListResolver
+        }
       },
       {
         path: 'history',

@@ -1,7 +1,9 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, ElementRef, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, Subscription } from 'rxjs';
 import { AlertComponent } from "../../../components/alert/alert.component";
 import { FilterComponent } from "../../../components/filter/filter.component";
+import { Song } from '../../../interface/karaoke.interface';
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { currentListTableHeaders } from '../../data/current-list-headers';
 import { PrivateService } from '../../services/private.service';
@@ -10,27 +12,63 @@ import { SocketClientService } from '../../services/socket-client.service';
 @Component({
   selector: 'app-current-list',
   standalone: true,
-  imports: [CapitalizePipe, AsyncPipe, FilterComponent, AlertComponent],
+  imports: [CapitalizePipe, FilterComponent, AlertComponent],
   templateUrl: './current-list.component.html',
   styleUrl: './current-list.component.css'
 })
-export class CurrentListComponent implements OnInit {
+export class CurrentListComponent implements OnInit, OnDestroy {
 
   public tableHeaders = currentListTableHeaders;
   public activeClassCompleted = false;
   public songId = 0;
   private readonly markAsCompletedClassName = 'markAsCompleted';
   private readonly markAsDeletedClassName = 'markAsDeleted';
+  public lastMessage: any;
+  private messageSubscription!: Subscription;
 
   private privateService = inject(PrivateService);
   private elementRef = inject(ElementRef);
   private socketClientService = inject(SocketClientService);
+  private activatedRoute = inject(ActivatedRoute);
 
-  public songList$ = this.privateService.watchChangesOnSongList();
+
+  public songList$: Song[] = [];
 
   ngOnInit(): void {
-    this.socketClientService.connectToWebSockets()
+    this.getPlaylistFromResolver();
+    this.getMessage();
   }
+
+  private getPlaylistFromResolver(){
+    this.songList$ = this.activatedRoute.snapshot.data['playlist'];
+  }
+
+
+  private getMessage(): void {
+
+    this.socketClientService.connectToWebSockets();
+    this.socketClientService.message$
+      .pipe(
+        map(e => {
+            return {
+              userName: e.payload?.userName ?? '',
+              songName: e.payload?.songName ?? '',
+              artistName: e.payload?.artistName ?? '',
+              numberOnList: e.payload?.numberOnList ?? ''
+            }
+        })
+      )
+      .subscribe({
+        next: message => {
+          this.songList$.push(message)
+          console.log(message);
+        },
+        error: error => {
+          console.log(error);
+        }
+      })
+
+  };
 
   public markAsComplete(songId: number): void {
     this.accessToElement(songId, 'add', this.markAsCompletedClassName);
@@ -56,8 +94,13 @@ export class CurrentListComponent implements OnInit {
     };
   };
 
-   public onFilterChanged(filterValue: string): void {
+  public onFilterChanged(filterValue: string): void {
     console.log(filterValue);
+  }
+
+  ngOnDestroy() {
+    // Limpiar suscripción
+    this.messageSubscription.unsubscribe();
   }
 
 }
