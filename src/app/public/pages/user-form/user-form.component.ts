@@ -49,10 +49,10 @@ export class UserFormComponent {
 
     const { userName, userLastName, songName, artistName } = formValue;
 
-    this.userName = userName;
-    this.userLastName = userLastName;
-    this.songName = songName;
-    this.artistName = artistName;
+    this.userName = userName.trim();
+    this.userLastName = userLastName.trim();
+    this.songName = songName.trim();
+    this.artistName = artistName.trim();
 
     this.generateId();
 

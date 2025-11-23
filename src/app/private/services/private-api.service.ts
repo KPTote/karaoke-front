@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PlaylistRes } from '../interfaces/private.interface';
+import { AddSongRequest, PlaylistRes } from '../interfaces/private.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +12,9 @@ export class PrivateApiService {
 
   public getPlaylist(): Observable<PlaylistRes[]> {
     return this.http.get<PlaylistRes[]>('http://localhost:3000/api/playlist');
+  }
+
+  public updateSong(song: AddSongRequest): Observable<any>{
+    return this.http.put<any>('http://localhost:3000/api/edit-song', song)
   }
 }

@@ -1,7 +1,22 @@
 <div class="edit-song-container">
+  @if(showAlert){
+  <div class="edit-song__alert">
+    <div class="'alert alert-success'" role="alert">
+      {{ messageAlert }}
+    </div>
+  </div>
+  }
+
   <app-form
     [headerForm]="formSettings"
     [formActionValue]="'UPDATE'"
     (formValue)="formValue($event)"
+    [dataSelected]="songSelected"
   ></app-form>
+
+  <div class="edit-song__btn">
+    <button type="button" class="btn btn-primary" (click)="back()">
+      Regresar
+    </button>
+  </div>
 </div>

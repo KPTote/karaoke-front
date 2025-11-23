@@ -3,6 +3,7 @@ export const currentListTableHeaders = [
   'Nombre de la canción',
   'Nombre del artista',
   'Nombre del participante',
+  'Editar',
   'Marcar cómo completada',
   'Marcar cómo eliminada',
   'Resetear'

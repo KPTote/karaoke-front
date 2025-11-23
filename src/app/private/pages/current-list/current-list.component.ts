@@ -1,5 +1,5 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subscription } from 'rxjs';
 import { AlertComponent } from "../../../components/alert/alert.component";
 import { FilterComponent } from "../../../components/filter/filter.component";
@@ -16,7 +16,7 @@ import { SocketClientService } from '../../services/socket-client.service';
   templateUrl: './current-list.component.html',
   styleUrl: './current-list.component.css'
 })
-export class CurrentListComponent implements OnInit, OnDestroy {
+export class CurrentListComponent implements OnInit {
 
   public tableHeaders = currentListTableHeaders;
   public activeClassCompleted = false;
@@ -30,6 +30,7 @@ export class CurrentListComponent implements OnInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private socketClientService = inject(SocketClientService);
   private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
 
 
   public songList$: Song[] = [];
@@ -98,9 +99,12 @@ export class CurrentListComponent implements OnInit, OnDestroy {
     console.log(filterValue);
   }
 
-  ngOnDestroy() {
-    // Limpiar suscripción
-    this.messageSubscription.unsubscribe();
+
+
+  public updateSong(songId: Song){
+    this.router.navigate(['/private/dashboard/edit-song'], {
+      queryParams: songId
+    })
   }
 
 }

@@ -30,6 +30,16 @@
           <td class="column-buttons">
             <button
               type="button"
+              class="btn btn-warning"
+              id="btn-update"
+              (click)="updateSong(song)"
+            >
+              Editar
+            </button>
+          </td>
+          <td class="column-buttons">
+            <button
+              type="button"
               class="btn btn-success"
               id="btn-complete"
               (click)="markAsComplete(song.numberOnList)"
@@ -61,7 +71,7 @@
         }
       </tbody>
     </table>
-    @if(songList$.length  === 0){
+    @if(songList$.length === 0){
     <div class="current-list-alert">
       <app-alert
         [message]="'No hay canciones agregadas a la lista.'"

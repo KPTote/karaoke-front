@@ -20,6 +20,7 @@ export class FormComponent implements OnInit {
 
   public headerForm = input.required<FormSettings>();
   public formActionValue = input.required<formAction>();
+  public dataSelected = input<FormStructure>();
   public formValue = output<FormStructure>();
 
   public readonly formFields: UserFormFields[] = formFields;
@@ -42,10 +43,10 @@ export class FormComponent implements OnInit {
   private setValueForms(): void {
 
     this.form.patchValue({
-      userName: 'Kevyn',
-      userLastName: 'Posadas',
-      songName: 'Entre dos tierras',
-      artistName: 'Heroes del silencio'
+      userName: this.dataSelected()?.userName,
+      userLastName: this.dataSelected()?.userLastName,
+      songName: this.dataSelected()?.songName,
+      artistName: this.dataSelected()?.artistName
     })
 
   }
@@ -60,7 +61,17 @@ export class FormComponent implements OnInit {
 
     if (this.form.pristine && this.formActionValue() === 'UPDATE') return;
 
-    this.formValue.emit(this.form.value)
+
+    this.formValue.emit({
+      userName: this.getValuesForm('userName'),
+      userLastName: this.getValuesForm('userLastName'),
+      songName: this.getValuesForm('songName'),
+      artistName: this.getValuesForm('artistName')
+    })
   }
 
+  private getValuesForm(field: string){
+    const value: string = this.form.controls?.[field]?.value;
+    return value.trim();
+  }
 }
