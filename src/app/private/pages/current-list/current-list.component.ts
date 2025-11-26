@@ -36,6 +36,7 @@ export class CurrentListComponent implements OnInit {
   public songList$: Song[] = [];
 
   ngOnInit(): void {
+    console.log(this.songList$.length);
     this.getPlaylistFromResolver();
     this.getMessage();
   }

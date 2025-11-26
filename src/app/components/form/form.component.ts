@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import formFields from '../../data/form-fields.json';
 import { FormSettings, FormStructure } from '../../interface/karaoke.interface';
 import { UserFormFields } from '../../public/interfaces/public.interface';
@@ -25,6 +26,7 @@ export class FormComponent implements OnInit {
 
   public readonly formFields: UserFormFields[] = formFields;
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
   public form: FormGroup = this.fb.group({
     userName: ['', [Validators.required, Validators.pattern(`^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$`)]],
     userLastName: ['', [Validators.required, Validators.pattern(`^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$`)]],
@@ -73,5 +75,9 @@ export class FormComponent implements OnInit {
   private getValuesForm(field: string){
     const value: string = this.form.controls?.[field]?.value;
     return value.trim();
+  }
+
+  public back(){
+    this.router.navigate(['/private/dashboard'])
   }
 }

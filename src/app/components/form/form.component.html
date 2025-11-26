@@ -3,14 +3,12 @@
     @if(headerForm().showTitle || headerForm().showDescription){
     <div class="greetings-container">
       @if(headerForm().showTitle){
-        <h1>{{headerForm().title}}</h1>
-      }
-      @if(headerForm().showDescription){
-      <p>{{headerForm().description}}</p>
+      <h1>{{ headerForm().title }}</h1>
+      } @if(headerForm().showDescription){
+      <p>{{ headerForm().description }}</p>
       }
     </div>
     }
-
 
     <div class="form-inputs-container">
       <form [formGroup]="form" (ngSubmit)="submit()">
@@ -48,6 +46,12 @@
         <button type="button" class="btn btn-primary" (click)="submit()">
           Enviar
         </button>
+        @if(formActionValue() === 'UPDATE'){
+        <button type="button" class="btn btn-secondary" (click)="back()">
+          Regresar
+        </button>
+        }
+
       </div>
     </div>
   </div>

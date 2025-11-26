@@ -1,51 +1,51 @@
-.form-container{
+.form-container {
   width: 100%;
   display: grid;
   min-height: 100dvh;
   grid-template-rows: 1fr auto;
 }
 
-.body-form{
+.body-form {
   padding: 15px;
 }
 
-.greetings-container h1{
+.greetings-container h1 {
   margin: 10px 0;
 }
 
-.greetings-container p{
-  margin:20px 0;
+.greetings-container p {
+  margin: 20px 0;
 }
 
-
-.form-inputs-container .is-invalid{
+.form-inputs-container .is-invalid {
   margin: 0 !important;
 }
 
-.form-inputs-container .invalid-feedback{
+.form-inputs-container .invalid-feedback {
   margin-bottom: 10px;
 }
 
-.form-inputs-container .form-button-container{
-
+.form-inputs-container .form-button-container {
   margin-top: 30px;
 
-  button{
+
+  button {
     width: 100%;
     max-width: 200px;
+    margin-top: 15px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .body-form {
+    width: 100%;
+    max-width: 600px;
+    justify-self: center;
   }
 
-}
-
-
-@media only screen and (min-width:600px){
-
-
-.body-form{
-  width: 100%;
-  max-width: 600px;
-  justify-self: center;
-}
+  .form-inputs-container .form-button-container button {
+   margin-right: 15px;
+  }
 
 
 }
