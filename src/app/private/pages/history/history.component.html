@@ -10,12 +10,12 @@
         </tr>
       </thead>
       <tbody>
-        @for(item of fakeData; track item.numberOnList){
+        @for(item of playlist; track item.numberOnList){
         <tr>
           <td style="text-align: center">{{ item.numberOnList }}</td>
-          <td style="text-align: center">{{ item.songName }}</td>
-          <td style="text-align: center">{{ item.artistName }}</td>
-          <td style="text-align: center">{{ item.userName }}</td>
+          <td style="text-align: center">{{ item.songName | capitalize }}</td>
+          <td style="text-align: center">{{ item.artistName | capitalize }}</td>
+          <td style="text-align: center">{{ item.userName | capitalize }}</td>
           <td style="text-align: center">{{ item.date }}</td>
           <td style="text-align: center">{{ item.time }}</td>
         </tr>
