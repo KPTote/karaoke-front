@@ -11,6 +11,18 @@
   overflow: scroll;
 }
 
+.loader-general {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  max-width: 1400px;
+  left: 0;
+  background: white;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+}
+
 @media only screen and (min-width: 800px) {
   .scroll-tables {
     overflow: hidden;

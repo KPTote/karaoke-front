@@ -1,13 +1,23 @@
-.history-container .button-container{
-  text-align: end;
+.history-alert-container {
+  margin: 30px 0;
+}
+
+.history-container .button-container {
+  text-align: center;
   margin-top: 25px;
 }
 
-.history-container .button-container button{
+.history-container .button-container .printPDF {
   background: #0d1117;
+  margin-right: 10px;
 }
 
+.history-container .button-container button:hover {
+  color: #0066ff;
+}
 
-.history-container .button-container button:hover{
-  color: #0066FF;
+@media only screen and (min-width: 600px) {
+  .history-container .button-container {
+    text-align: end;
+  }
 }

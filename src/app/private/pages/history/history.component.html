@@ -1,5 +1,19 @@
 <div class="history-container private-tables">
   <h1>Historial</h1>
+
+  @if(loading){
+  <div class="loader-general">
+    <app-loader></app-loader>
+  </div>
+  }
+
+  @if(showAlert){
+  <div class="history-alert-container">
+    <app-alert [message]="messageAlert" [typeAlert]="typeAlert"></app-alert>
+  </div>
+  }
+
+  @if(playlist.length > 0){
   <div class="table-container scroll-tables">
     <table class="table">
       <thead>
@@ -24,6 +38,21 @@
     </table>
   </div>
   <div class="button-container">
-    <button type="button" class="btn btn-secondary" (click)="printPDF()">Descargar</button>
+    <button
+      type="button"
+      class="btn btn-secondary printPDF"
+      (click)="printPDF()"
+    >
+      Descargar
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      id="btn-delete"
+      (click)="clearHistory()"
+    >
+      Limpiar historico
+    </button>
   </div>
+  }
 </div>

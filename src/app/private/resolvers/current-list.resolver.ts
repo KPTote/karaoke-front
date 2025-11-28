@@ -19,9 +19,7 @@ export const currentListResolver: ResolveFn<any> = (route, state) => {
       })
     }),
     catchError(error => {
-      return of({
-        data: error
-      })
+      return of([])
     })
   )
 

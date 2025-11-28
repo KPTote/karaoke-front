@@ -5,18 +5,20 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-  <div class="spinner" aria-live="polite" aria-label="Cargando"></div>
+
+<div class="loader-container">
+   <div class="spinner" aria-live="polite" aria-label="Cargando"></div>
+</div>
+
+
   `,
   styles: `
-  .loader-container{
-    outline: 1px red solid;
-  }
 
   .spinner{
-    width: 36px;
-    height: 36px;
+    width: 150px;
+    height: 150px;
     border: 5px solid #fffc;
-    border-top-color: rgb(255, 0, 119);
+    border-top-color: #0066FF;
     border-radius: 100%;
     animation: spin 1s infinite;
   }

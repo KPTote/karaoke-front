@@ -17,4 +17,8 @@ export class PrivateApiService {
   public updateSong(song: AddSongRequest): Observable<any>{
     return this.http.put<any>('http://localhost:3000/api/edit-song', song)
   }
+
+  public clearPlaylist(): Observable<any>{
+    return this.http.delete<any>('http://localhost:3000/api/clear-playlist')
+  };
 }
