@@ -1,8 +1,18 @@
 <div class="current-list-container private-tables">
   <h1>Lista actual</h1>
+
+  @if(loading){
+  <div class="loader-general">
+    <app-loader></app-loader>
+  </div>
+  }
+
+  @if(songList$.length > 0){
   <div>
     <app-filter (filterChange)="onFilterChanged($event)"></app-filter>
   </div>
+  }
+
   <div class="table-container scroll-tables">
     @if(songList$.length > 0){
     <table class="table">
@@ -72,15 +82,10 @@
         }
       </tbody>
     </table>
-  } @else{
+    } @else{
     <div class="current-list-alert">
-      <app-alert
-        [message]="messageAlert"
-        [typeAlert]="'warning'"
-      ></app-alert>
+      <app-alert [message]="messageAlert" [typeAlert]="'warning'"></app-alert>
     </div>
-  }
-
+    }
   </div>
-
 </div>

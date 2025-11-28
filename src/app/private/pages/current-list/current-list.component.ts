@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { AlertComponent } from "../../../components/alert/alert.component";
 import { FilterComponent } from "../../../components/filter/filter.component";
+import { LoaderComponent } from '../../../components/loader/loader.component';
 import { Song } from '../../../interface/karaoke.interface';
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { currentListTableHeaders } from '../../data/current-list-headers';
@@ -11,7 +12,7 @@ import { SocketClientService } from '../../services/socket-client.service';
 @Component({
   selector: 'app-current-list',
   standalone: true,
-  imports: [CapitalizePipe, FilterComponent, AlertComponent],
+  imports: [CapitalizePipe, FilterComponent, AlertComponent, LoaderComponent],
   templateUrl: './current-list.component.html',
   styleUrl: './current-list.component.css'
 })
@@ -33,11 +34,13 @@ export class CurrentListComponent implements OnInit {
 
   public songList$: Song[] = [];
   public cloneSongList$: Song[] = [];
+  public loading = true;
 
   ngOnInit(): void {
     this.getPlaylistFromResolver();
     this.getMessage();
     this.clonePlaylist();
+    this.loading = false;
   }
 
   private getPlaylistFromResolver() {

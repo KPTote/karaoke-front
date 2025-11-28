@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertComponent } from "../../../components/alert/alert.component";
 import { FooterComponent } from "../../../components/footer/footer.component";
 import { FormComponent } from "../../../components/form/form.component";
+import { LoaderComponent } from '../../../components/loader/loader.component';
 import { FormSettings, FormStructure } from '../../../interface/karaoke.interface';
 import { AddSongRequest } from '../../../private/interfaces/private.interface';
 import userFormFields from '../../data/user-form-fields.json';
@@ -15,7 +17,7 @@ import { PublicService } from '../../services/public.service';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FooterComponent, FormComponent],
+  imports: [CommonModule, ReactiveFormsModule, FooterComponent, FormComponent, LoaderComponent, AlertComponent],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css'
 })
@@ -29,6 +31,10 @@ export class UserFormComponent {
     title: '¡Hola!',
     description: `Gracias por participar en el karaoke. Para poder participar es necesario completar el siguiente formulario. Luego, dar click en el botón de enviar.`
   };
+  public loading = false;
+  public messageAlert = '';
+  public typeAlert = '';
+  public showAlert = false;
 
   private userName = '';
   private userLastName = '';
@@ -47,6 +53,7 @@ export class UserFormComponent {
 
   public submit(formValue: FormStructure): void {
 
+    this.loading = true;
     const { userName, userLastName, songName, artistName } = formValue;
 
     this.userName = userName.trim();
@@ -66,7 +73,7 @@ export class UserFormComponent {
         artistName: this.artistName,
         numberOnList
       }
-    })
+    }).finally(() => this.loading = false)
   }
 
   private addSongToPlaylist(numberOnList: number): void {
@@ -83,7 +90,14 @@ export class UserFormComponent {
         this.navigateTo(numberOnList);
         this.publicService.accessToConfirmationForm(true);
       },
-      error: error => console.log(error)
+      error: error => {
+        console.log(error)
+        this.messageAlert = 'Error al agregar la canción.';
+        this.typeAlert = 'error';
+        this.triggerAlert();
+        this.loading = false;
+
+      }
     })
 
   }
@@ -98,8 +112,23 @@ export class UserFormComponent {
         console.log(res);
         this.addSongToPlaylist(res + 1)
       },
-      error: error => console.log(error)
+      error: error => {
+        console.log(error)
+        this.messageAlert = 'Error al agregar la canción.';
+        this.typeAlert = 'error';
+        this.triggerAlert();
+        this.loading = false;
+      }
     })
+  }
+
+  public triggerAlert() {
+
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 5000);
+
   }
 
 }

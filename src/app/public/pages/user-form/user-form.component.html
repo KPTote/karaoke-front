@@ -1,10 +1,21 @@
 <div class="user-form-container">
+  @if(showAlert){
+  <div class="user-form-alert">
+    <app-alert [message]="messageAlert" [typeAlert]="typeAlert"></app-alert>
+  </div>
+  }
 
+  @if(loading){
+  <div class="loader-general">
+    <app-loader></app-loader>
+  </div>
+  } @else {
   <app-form
-  [headerForm]="formSettings"
-  [formActionValue]="'CREATE'"
-  (formValue)="submit($event)"
+    [headerForm]="formSettings"
+    [formActionValue]="'CREATE'"
+    (formValue)="submit($event)"
   ></app-form>
+  }
 
   <div class="footer-form">
     <app-footer></app-footer>

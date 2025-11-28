@@ -1,7 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { AlertComponent } from "../../../components/alert/alert.component";
 import { FormComponent } from "../../../components/form/form.component";
+import { LoaderComponent } from '../../../components/loader/loader.component';
 import { FormSettings, FormStructure } from '../../../interface/karaoke.interface';
 import { AddSongRequest } from '../../interfaces/private.interface';
 import { PrivateApiService } from '../../services/private-api.service';
@@ -10,7 +12,7 @@ type typeAlert = 'SUCCESS' | 'ERROR';
 @Component({
   selector: 'app-edit-song',
   standalone: true,
-  imports: [FormComponent, AlertComponent],
+  imports: [FormComponent, AlertComponent, LoaderComponent],
   templateUrl: './edit-song.component.html',
   styleUrl: './edit-song.component.css'
 })
@@ -29,6 +31,7 @@ export class EditSongComponent implements OnInit {
     artistName: ''
   };
   public showAlert = false;
+  public loading = false;
   public typeAlert: typeAlert = 'SUCCESS';
   public messageAlert = '';
   public showConfirmation = false;
@@ -53,6 +56,8 @@ export class EditSongComponent implements OnInit {
 
   public formValue(values: FormStructure): void {
 
+    this.loading = true;
+
     this.query = {
       numberOnList: this.numberOnList,
       userName: `${values.userName} ${values.userLastName}`,
@@ -61,7 +66,11 @@ export class EditSongComponent implements OnInit {
     }
 
 
-    this.privateApi.updateSong(this.query).subscribe({
+    this.privateApi.updateSong(this.query)
+    .pipe(
+      finalize(()=> this.loading = false)
+    )
+    .subscribe({
       next: res => {
         this.showConfirmation = true;
         this.typeAlert = 'SUCCESS';

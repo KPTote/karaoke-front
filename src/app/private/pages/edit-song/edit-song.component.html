@@ -1,5 +1,9 @@
 <div class="edit-song-container">
-  @if(!showConfirmation){ @if(showAlert){
+  @if(loading){
+  <div class="loader-general">
+    <app-loader></app-loader>
+  </div>
+  } @else { @if(!showConfirmation){ @if(showAlert){
   <div class="edit-confirmation-alert-error">
     <app-alert
       [message]="messageAlert"
@@ -39,5 +43,5 @@
       </button>
     </div>
   </div>
-  }
+  } }
 </div>

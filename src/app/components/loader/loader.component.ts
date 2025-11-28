@@ -15,8 +15,8 @@ import { Component } from '@angular/core';
   styles: `
 
   .spinner{
-    width: 150px;
-    height: 150px;
+    width: 50px;
+    height: 50px;
     border: 5px solid #fffc;
     border-top-color: #0066FF;
     border-radius: 100%;
@@ -27,6 +27,13 @@ import { Component } from '@angular/core';
     to {
       transform:rotate(360deg);
     }
+  }
+
+  @media only screen and (min-width: 600px){
+      .spinner{
+    width: 150px;
+    height: 150px;
+  }
   }
 
   `

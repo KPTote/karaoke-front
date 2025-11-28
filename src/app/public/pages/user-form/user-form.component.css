@@ -1,4 +1,10 @@
-.user-form-container .footer-form{
-  margin-top: 30px;
+.user-form-container .user-form-alert {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
 }
 
+.user-form-container .footer-form {
+  margin-top: 30px;
+}
