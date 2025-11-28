@@ -4,6 +4,7 @@
     <app-filter (filterChange)="onFilterChanged($event)"></app-filter>
   </div>
   <div class="table-container scroll-tables">
+    @if(songList$.length > 0){
     <table class="table">
       <thead>
         <tr>
@@ -14,12 +15,12 @@
         </tr>
       </thead>
       <tbody>
-        @for(song of songList$ | async; track song.id){ @let idElement =
-        'id-element-' + song.id;
+        @for(song of songList$ ; track song.numberOnList){ @let idElement =
+        'id-element-' + song.numberOnList;
         <tr>
-          <th scope="row">{{ song.id }}</th>
+          <th scope="row">{{ song.numberOnList }}</th>
           <td [id]="idElement + '-column-1'">
-            div{{ song.songName | capitalize }}
+            {{ song.songName | capitalize }}
           </td>
           <td [id]="idElement + '-column-2'">
             {{ song.artistName | capitalize }}
@@ -30,9 +31,19 @@
           <td class="column-buttons">
             <button
               type="button"
+              class="btn btn-warning"
+              id="btn-update"
+              (click)="updateSong(song)"
+            >
+              Editar
+            </button>
+          </td>
+          <td class="column-buttons">
+            <button
+              type="button"
               class="btn btn-success"
               id="btn-complete"
-              (click)="markAsComplete(song.id)"
+              (click)="markAsComplete(song.numberOnList)"
             >
               Completar
             </button>
@@ -42,7 +53,7 @@
               type="button"
               class="btn btn-danger"
               id="btn-delete"
-              (click)="markAsDelete(song.id)"
+              (click)="markAsDelete(song.numberOnList)"
             >
               Eliminar
             </button>
@@ -52,7 +63,7 @@
               type="button"
               class="btn btn-secondary"
               [id]="songId"
-              (click)="resetElement(song.id)"
+              (click)="resetElement(song.numberOnList)"
             >
               <i class="bi bi-arrow-counterclockwise"></i>
             </button>
@@ -61,13 +72,15 @@
         }
       </tbody>
     </table>
-    @if(((songList$ | async)?.length ?? []) === 0){
+  } @else{
     <div class="current-list-alert">
       <app-alert
-        [message]="'No hay canciones agregadas a la lista.'"
+        [message]="messageAlert"
         [typeAlert]="'warning'"
       ></app-alert>
     </div>
-    }
+  }
+
   </div>
+
 </div>

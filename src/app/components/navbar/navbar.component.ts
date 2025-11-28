@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -155,8 +155,12 @@ nav ul li a:hover {
   `
 })
 export class NavbarComponent {
+
+  private router = inject(Router);
+
   logOut() {
-    throw new Error('Method not implemented.');
+    sessionStorage.removeItem('token');
+    this.router.navigate(['/'])
   }
 
 }

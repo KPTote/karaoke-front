@@ -1,0 +1,34 @@
+[
+  {
+    "id": "0",
+    "name": "userName",
+    "label": "Tu nombre",
+    "controlName": "userName",
+    "error": "Debes de ingresar tu nombre.",
+    "patternError": "No se permiten números o caracteres especiales."
+  },
+  {
+    "id": "1",
+    "name": "userLastname",
+    "label": "Tu apellido",
+    "controlName": "userLastName",
+    "error": "Debes de ingresar tu apellido.",
+    "patternError": "No se permiten números o caracteres especiales."
+  },
+  {
+    "id": "2",
+    "name": "songName",
+    "label": "Nombre de la canción",
+    "controlName": "songName",
+    "error": "Debes de ingresar el nombre de la canción.",
+    "patternError": "No se permiten caracteres especiales."
+  },
+  {
+    "id": "3",
+    "name": "artistName",
+    "label": "Nombre del artista o banda",
+    "controlName": "artistName",
+    "error": "Debes de ingresar el nombre del artista o banda.",
+    "patternError": "No se permiten caracteres especiales."
+  }
+]

@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       id="filter"
       [(ngModel)]="filterValue"
       (ngModelChange)="filterChange.emit(filterValue)"
+      autocomplete="off"
       >
     </div>
   </div>

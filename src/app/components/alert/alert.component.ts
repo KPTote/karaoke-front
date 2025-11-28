@@ -5,16 +5,20 @@ import { Component, input } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-
     @switch (typeAlert()) {
+
 
       @case('warning'){
             <div class="alert-container alert-background-warning">
-              <span>No hay canciones agregadas a la lista.</span>
+              <span>{{message()}}</span>
             </div>
       } @case ('error'){
             <div class="alert-container alert-background-error">
-              <span>No hay canciones agregadas a la lista.</span>
+              <span>{{message()}}</span>
+            </div>
+      } @case('success'){
+            <div class="alert-container alert-background-success">
+              <span>{{message()}}</span>
             </div>
       } @default {
             <div class="alert-container">
@@ -46,6 +50,10 @@ import { Component, input } from '@angular/core';
   color: white;
 }
 
+.alert-background-success{
+  background-color: #0f5132;
+  color: white;
+}
 
   `
 })
@@ -53,5 +61,7 @@ export class AlertComponent {
 
   public message = input.required<string>();
   public typeAlert = input.required<string>();
+
+
 
 }

@@ -1,0 +1,37 @@
+.edit-song-container {
+  padding: 15px;
+}
+
+.edit-confirmation-container{
+  padding: 40px 15px 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.edit-confirmation-alert {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 50px;
+}
+
+.edit-confirmation-alert-error{
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+}
+
+.edit-confirmation-body {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 15px;
+    margin-bottom: 50px;
+
+}
+
+@media only screen and (min-width: 600px) {
+  .edit-song__alert {
+    margin: 0 auto;
+  }
+}
