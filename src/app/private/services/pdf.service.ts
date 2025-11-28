@@ -28,12 +28,37 @@ export class PdfService {
   private generateBody(dataBody: HistoryItem[]): string[][] {
 
     return dataBody.map(element => {
-      let dataArr: string[] = [];
+
+      let dataArr: any[] = [];
       for (const key in element) {
         const value = element[key as keyof HistoryItem];
-        dataArr.push(value.toString())
+
+        switch (key) {
+          case 'numberOnList':
+            dataArr[0] = value;
+            break;
+          case 'songName':
+            dataArr[1] = value;
+            break;
+          case 'artistName':
+            dataArr[2] = value;
+            break;
+          case 'userName':
+            dataArr[3] = value;
+            break;
+          case 'date':
+            dataArr[4] = value;
+            break;
+          case 'time':
+            dataArr[5] = value;
+            break;
+          default:
+            dataArr.push(value)
+            break;
+        }
+
       }
-      return dataArr
+      return dataArr;
     });
 
 
