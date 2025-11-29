@@ -93,6 +93,8 @@ export class HistoryComponent implements OnInit {
             this.showAlert = true;
             this.messageAlert = 'Historial eliminado correctamente.';
             this.typeAlert = 'success';
+            localStorage.removeItem('completed');
+            localStorage.removeItem('deleted');
           }
 
 
