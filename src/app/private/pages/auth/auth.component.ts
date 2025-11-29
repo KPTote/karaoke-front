@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { LoaderComponent } from "../../../components/loader/loader.component";
 import loginField from '../../data/login-fields.json';
+import { PrivateApiService } from '../../services/private-api.service';
 
 @Component({
   selector: 'app-auth',
@@ -12,7 +13,7 @@ import loginField from '../../data/login-fields.json';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
-export class AuthComponent  {
+export class AuthComponent {
 
 
   private readonly maxLengthEmail = 100;
@@ -23,6 +24,7 @@ export class AuthComponent  {
   public loginFields = loginField;
 
   private readonly fb = inject(FormBuilder);
+  private readonly privateApiService = inject(PrivateApiService);
 
 
   public loginForm: FormGroup = this.fb.group({
@@ -50,10 +52,22 @@ export class AuthComponent  {
     console.log(this.loginForm.valid);
 
     const email = this.email?.value ?? '';
+    const password = this.password?.value ?? '';
 
-    sessionStorage.setItem('token', email);
 
-    this.router.navigate(['/private/dashboard']);
+
+    this.privateApiService.auth(email, password)
+      .subscribe({
+        next: res => {
+          sessionStorage.setItem('token', res.token);
+          this.router.navigate(['/private/dashboard']);
+
+        },
+        error: error => console.log(error)
+      })
+
+
+
 
 
 

@@ -24,3 +24,8 @@ export interface PlaylistRes {
   songName: string;
   userName: string;
 }
+
+export interface LoginResponse {
+  email: string;
+  token: string;
+}
