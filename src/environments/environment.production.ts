@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   apiUrl: 'https://karaoke-backend-u936.onrender.com/api',
   apiWs: 'karaoke-backend-u936.onrender.com',
   appName: 'Karaoke App DEV',

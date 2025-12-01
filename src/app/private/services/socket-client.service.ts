@@ -13,9 +13,12 @@ export class SocketClientService {
 
   public connectToWebSockets() {
 
-    const baseUrl = environment.apiWs;
+    const production = environment.production;
 
-    const socket = new WebSocket(`wss://${baseUrl}/ws`);
+    const baseUrl = environment.apiWs;
+    const prefix = production ? 'wss' : 'ws';
+
+    const socket = new WebSocket(`${prefix}://${baseUrl}/ws`);
 
     socket.onmessage = (event) => {
       this.messageSubject.next(JSON.parse(event.data));
