@@ -29,3 +29,13 @@ export interface LoginResponse {
   email: string;
   token: string;
 }
+
+export interface EditSongRes {
+  message: string;
+  updateSong: any;
+}
+
+export interface ClearPlaylistRes {
+  message: string;
+  clearPlaylist: any;
+}

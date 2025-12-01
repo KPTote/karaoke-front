@@ -110,14 +110,15 @@ export class CurrentListComponent implements OnInit, AfterViewInit {
 
   private addToStorage(songId: number, action: string): void {
 
-
     if (action === 'completed') {
+      if(this.completedArr.includes(songId)) return;
       const deletedIndex = this.deletedArr.indexOf(songId);
       if (deletedIndex !== -1) this.deletedArr.splice(deletedIndex, 1);
       this.completedArr.push(songId);
     }
 
     if (action === 'deleted') {
+      if(this.deletedArr.includes(songId)) return;
       const completedIndex = this.completedArr.indexOf(songId);
       if (completedIndex !== -1) this.completedArr.splice(completedIndex, 1);
       this.deletedArr.push(songId);

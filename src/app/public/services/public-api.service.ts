@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { AddSongRequest } from '../../private/interfaces/private.interface';
+import { AddSongResponse } from '../interfaces/public.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +11,14 @@ import { AddSongRequest } from '../../private/interfaces/private.interface';
 export class PublicApiService {
 
   private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl;
 
-  public addNewSong(song: AddSongRequest): Observable<any>{
-      return this.http.post<any>('http://localhost:3000/api/add-song', song);
+  public addNewSong(song: AddSongRequest): Observable<AddSongResponse>{
+      return this.http.post<AddSongResponse>(`${this.baseUrl}/add-song`, song);
   }
 
-    public getSongCount(): Observable<any>{
-      return this.http.get<any>('http://localhost:3000/api/get-song-count');
+    public getSongCount(): Observable<number>{
+      return this.http.get<number>(`${this.baseUrl}/get-song-count`);
   }
 
 }
