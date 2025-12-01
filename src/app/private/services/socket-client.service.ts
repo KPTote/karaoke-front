@@ -13,7 +13,7 @@ export class SocketClientService {
 
   public connectToWebSockets() {
 
-    const baseUrl = environment.apiUrl;
+    const baseUrl = environment.apiWs;
 
     const socket = new WebSocket(`ws://${baseUrl}/ws`);
 
