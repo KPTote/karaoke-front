@@ -14,7 +14,6 @@ export class SocketClientService {
   public connectToWebSockets() {
 
     const baseUrl = environment.apiWs;
-    console.log(baseUrl);
 
     const socket = new WebSocket(`wss://${baseUrl}/ws`);
 
