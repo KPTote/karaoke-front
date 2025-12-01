@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { WSocketRes } from '../interfaces/private.interface';
 
 @Injectable({
@@ -12,7 +13,9 @@ export class SocketClientService {
 
   public connectToWebSockets() {
 
-    const socket = new WebSocket('ws://localhost:3000/ws');
+    const baseUrl = environment.apiUrl;
+
+    const socket = new WebSocket(`ws://${baseUrl}/url`);
 
     socket.onmessage = (event) => {
       this.messageSubject.next(JSON.parse(event.data));
