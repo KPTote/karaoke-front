@@ -1,0 +1,58 @@
+<div class="form-container">
+  <div class="body-form">
+    @if(headerForm().showTitle || headerForm().showDescription){
+    <div class="greetings-container">
+      @if(headerForm().showTitle){
+      <h1>{{ headerForm().title }}</h1>
+      } @if(headerForm().showDescription){
+      <p>{{ headerForm().description }}</p>
+      }
+    </div>
+    }
+
+    <div class="form-inputs-container">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        @for(field of formFields; track field.id){ @let controlName =
+        field.controlName; @let requiredError =
+        form.get(controlName)?.errors?.['required']; @let patternError =
+        form.get(controlName)?.errors?.['pattern']; @let touched =
+        form.get(controlName)?.['touched']; @let showIsInvalidClass =
+        (requiredError || patternError) && touched;
+
+        <div
+          class="form-floating mb-3"
+          [ngClass]="{ 'is-invalid': showIsInvalidClass }"
+        >
+          <input
+            type="input"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': showIsInvalidClass }"
+            [placeholder]="field.label"
+            [formControlName]="field.controlName"
+            [id]="field.name"
+            autocomplete="off"
+          />
+          <label [for]="field.name">{{ field.label }}</label>
+        </div>
+
+        @if(showIsInvalidClass){
+        <div class="invalid-feedback">
+          {{ patternError ? field.patternError : field.error }}
+        </div>
+        } }
+      </form>
+
+      <div class="form-button-container">
+        <button type="button" class="btn btn-primary" (click)="submit()">
+          Enviar
+        </button>
+        @if(formActionValue() === 'UPDATE'){
+        <button type="button" class="btn btn-secondary" (click)="back()">
+          Regresar
+        </button>
+        }
+
+      </div>
+    </div>
+  </div>
+</div>

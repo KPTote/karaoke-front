@@ -1,63 +1,134 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertComponent } from "../../../components/alert/alert.component";
 import { FooterComponent } from "../../../components/footer/footer.component";
+import { FormComponent } from "../../../components/form/form.component";
+import { LoaderComponent } from '../../../components/loader/loader.component';
+import { FormSettings, FormStructure } from '../../../interface/karaoke.interface';
+import { AddSongRequest } from '../../../private/interfaces/private.interface';
 import userFormFields from '../../data/user-form-fields.json';
+import { UserFormFields } from '../../interfaces/public.interface';
+import { PublicApiService } from '../../services/public-api.service';
 import { PublicService } from '../../services/public.service';
 
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, FooterComponent, FormComponent, LoaderComponent, AlertComponent],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css'
 })
 export class UserFormComponent {
 
-  public readonly userFormFields = userFormFields;
+  public readonly userFormFields: UserFormFields[] = userFormFields;
   public songFormInvalid = false;
+  public formSettings: FormSettings = {
+    showTitle: true,
+    showDescription: true,
+    title: '¡Hola!',
+    description: `Gracias por participar en el karaoke. Para poder participar es necesario completar el siguiente formulario. Luego, dar click en el botón de enviar.`
+  };
+  public loading = false;
+  public messageAlert = '';
+  public typeAlert = '';
+  public showAlert = false;
+
+  private userName = '';
+  private userLastName = '';
+  private songName = '';
+  private artistName = '';
 
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly publicService = inject(PublicService);
+  private readonly publicApiService = inject(PublicApiService);
 
   constructor() {
     this.publicService.accessToConfirmationForm(false);
   }
 
-  public userForm: FormGroup = this.fb.group({
-    userName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$')]],
-    userLastName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$')]],
-    songName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ0-9\\s]+$')]],
-    artistName: ['', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ0-9\\s]+$')]],
-    noArtistName: [false]
-  });
 
-  public submit(): void {
+  public submit(formValue: FormStructure): void {
 
-    if (!this.userForm.valid) {
-      this.userForm.markAllAsTouched()
-      return;
-    }
+    this.loading = true;
+    const { userName, userLastName, songName, artistName } = formValue;
 
-    this.router.navigate(['/public/confirmation-form'], {
-      queryParams: {
-        user: this.userForm?.controls['userName']?.value ?? null,
-        songName: this.userForm?.controls['songName']?.value ?? null,
-        artistName: this.userForm?.controls['artistName']?.value ?? null,
-      }
-    })
+    this.userName = userName.trim();
+    this.userLastName = userLastName.trim();
+    this.songName = songName.trim();
+    this.artistName = artistName.trim();
 
-    this.publicService.accessToConfirmationForm(true);
+    this.generateId();
 
   }
 
-  private getName(): string {
-    const userName = this.userForm?.controls['userName']?.value ?? null;
-    const userLastName = this.userForm?.controls['userLastName']?.value ?? null;
-    return `${userName} ${userLastName}`;
+  private navigateTo(numberOnList: number): void {
+    this.router.navigate(['/public/confirmation-form'], {
+      queryParams: {
+        user: this.userName,
+        songName: this.songName,
+        artistName: this.artistName,
+        numberOnList
+      }
+    }).finally(() => this.loading = false)
+  }
+
+  private addSongToPlaylist(numberOnList: number): void {
+
+    const req: AddSongRequest = {
+      numberOnList,
+      songName: this.songName,
+      artistName: this.artistName,
+      userName: this.getUserName(),
+    }
+
+    this.publicApiService.addNewSong(req).subscribe({
+      next: res => {
+        this.navigateTo(numberOnList);
+        this.publicService.accessToConfirmationForm(true);
+      },
+      error: error => {
+        console.log(error)
+        this.messageAlert = 'Error al agregar la canción.';
+        this.typeAlert = 'error';
+        this.triggerAlert();
+        this.loading = false;
+
+      }
+    })
+
+  }
+
+  private getUserName(): string {
+    return `${this.userName} ${this.userLastName}`;
+  }
+
+  private generateId(): void {
+    this.publicApiService.getSongCount().subscribe({
+      next: res => {
+        console.log(res);
+        this.addSongToPlaylist(res + 1)
+      },
+      error: error => {
+        console.log(error)
+        this.messageAlert = 'Error al agregar la canción.';
+        this.typeAlert = 'error';
+        this.triggerAlert();
+        this.loading = false;
+      }
+    })
+  }
+
+  public triggerAlert() {
+
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 5000);
+
   }
 
 }

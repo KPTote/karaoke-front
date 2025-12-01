@@ -1,0 +1,91 @@
+<div class="current-list-container private-tables">
+  <h1>Lista actual</h1>
+
+  @if(loading){
+  <div class="loader-general">
+    <app-loader></app-loader>
+  </div>
+  }
+
+  @if(songList$.length > 0){
+  <div>
+    <app-filter (filterChange)="onFilterChanged($event)"></app-filter>
+  </div>
+  }
+
+  <div class="table-container scroll-tables">
+    @if(songList$.length > 0){
+    <table class="table">
+      <thead>
+        <tr>
+          @for(header of tableHeaders; track header; let idx = $index){ @let
+          classNameHead = 'column-' + idx + '-header';
+          <th scope="col" [class]="classNameHead">{{ header }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for(song of songList$ ; track song.numberOnList){ @let idElement =
+        'id-element-' + song.numberOnList;
+        <tr>
+          <th scope="row">{{ song.numberOnList }}</th>
+          <td [id]="idElement + '-column-1'">
+            {{ song.songName | capitalize }}
+          </td>
+          <td [id]="idElement + '-column-2'">
+            {{ song.artistName | capitalize }}
+          </td>
+          <td [id]="idElement + '-column-3'" class="value-column">
+            {{ song.userName | capitalize }}
+          </td>
+          <td class="column-buttons">
+            <button
+              type="button"
+              class="btn btn-warning"
+              id="btn-update"
+              (click)="updateSong(song)"
+            >
+              Editar
+            </button>
+          </td>
+          <td class="column-buttons">
+            <button
+              type="button"
+              class="btn btn-success"
+              id="btn-complete"
+              (click)="markAsComplete(song.numberOnList)"
+            >
+              Completar
+            </button>
+          </td>
+          <td class="column-buttons">
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="btn-delete"
+              (click)="markAsDelete(song.numberOnList)"
+            >
+              Eliminar
+            </button>
+          </td>
+          <td class="value-column">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [id]="songId"
+              (click)="resetElement(song.numberOnList)"
+            >
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    } @else{
+    <div class="current-list-alert">
+      <app-alert [message]="messageAlert" [typeAlert]="'warning'"></app-alert>
+    </div>
+    }
+  </div>
+</div>

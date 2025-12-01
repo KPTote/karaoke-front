@@ -15,7 +15,7 @@ export class ConfirmationFormComponent implements OnInit {
   public user: string | undefined;
   public songName: string | undefined;
   public artistName: string | undefined;
-  public numberOnlist: string = '9';
+  public numberOnlist: string = '';
 
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
@@ -29,6 +29,7 @@ export class ConfirmationFormComponent implements OnInit {
     this.user = this.activatedRoute.snapshot.queryParams['user'] ?? '';
     this.songName = this.activatedRoute.snapshot.queryParams['songName'] ?? '';
     this.artistName = this.activatedRoute.snapshot.queryParams['artistName'] ?? '';
+    this.numberOnlist = this.activatedRoute.snapshot.queryParams['numberOnList'] ?? '';
   }
 
   public back(): void {

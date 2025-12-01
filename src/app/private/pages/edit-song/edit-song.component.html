@@ -1,0 +1,47 @@
+<div class="edit-song-container">
+  @if(loading){
+  <div class="loader-general">
+    <app-loader></app-loader>
+  </div>
+  } @else { @if(!showConfirmation){ @if(showAlert){
+  <div class="edit-confirmation-alert-error">
+    <app-alert
+      [message]="messageAlert"
+      [typeAlert]="typeAlert.toLowerCase()"
+    ></app-alert>
+  </div>
+
+  }
+
+  <app-form
+    [headerForm]="formSettings"
+    [formActionValue]="'UPDATE'"
+    (formValue)="formValue($event)"
+    [dataSelected]="songSelected"
+  ></app-form>
+  } @else {
+  <div class="edit-confirmation-container">
+    <div class="edit-confirmation-alert">
+      <app-alert
+        [message]="messageAlert"
+        [typeAlert]="typeAlert.toLowerCase()"
+      ></app-alert>
+    </div>
+
+    <div class="edit-confirmation-body">
+      <span> <strong>Nombre:</strong> </span>
+      <span>{{ query.userName }}</span>
+      <span><strong>Canción:</strong> </span>
+      <span>{{ query.songName }}</span>
+      <span> <strong>Artista:</strong> </span>
+      <span>{{ query.artistName }}</span>
+    </div>
+
+    <div class="edit-confirmation-btn">
+      <button type="button" class="btn btn-secondary" (click)="back()">
+        Regresar
+      </button>
+    </div>
+  </div>
+  } }
+</div>

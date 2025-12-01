@@ -1,28 +1,33 @@
 <div class="confirmation-container">
-
   <div class="confirmation-body">
-      <div class="thanks-container">
-    @let addComa = user ? ', ' : '';
-    <h1>¡Gracias por participar{{addComa}}{{user ?? '' | capitalize}}!</h1>
-  </div>
-  <div class="description-container">
+    <div class="thanks-container">
+      @let addComa = user ? ', ' : '';
+      <h1>
+        ¡Gracias por participar{{ addComa }}{{ user ?? "" | capitalize }}!
+      </h1>
+    </div>
+    <div class="description-container">
+      <span
+        >La canción <strong>"{{ songName ?? "" | capitalize }}"</strong> de
+        <strong>{{ artistName ?? "" | capitalize }}</strong> ha sido agregada
+        correctamente a la lista de reproducción.</span
+      >
 
-    <span>La canción <strong>"{{songName ?? '' | capitalize}}"</strong> de <strong>{{artistName ?? '' | capitalize}}</strong> ha sido agregada correctamente a la lista de reproducción.</span>
+      <span
+        >Tu número en la cola de espera es el
+        <strong>#{{ numberOnlist }}</strong> . Por favor, permanece atento a
+        nuestras pantallas para ver la lista de reproducción.</span
+      >
+    </div>
 
-    <span>Tu número en la cola de espera es el <strong>#{{numberOnlist}}</strong> . Por favor, permanece atento a nuestras pantallas para ver la lista de reproducción.</span>
-  </div>
-
-  <div class="button-container">
-          <button type="button" class="btn btn-primary" (click)="back()">
+    <div class="button-container">
+      <button type="button" class="btn btn-primary" (click)="back()">
         Regresar a formulario
       </button>
-  </div>
+    </div>
   </div>
 
   <div class="confirmation-footer">
     <app-footer></app-footer>
   </div>
-
 </div>
-
-
