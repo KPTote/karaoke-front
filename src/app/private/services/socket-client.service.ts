@@ -16,7 +16,7 @@ export class SocketClientService {
     const baseUrl = environment.apiWs;
     console.log(baseUrl);
 
-    const socket = new WebSocket(`ws://${baseUrl}/ws`);
+    const socket = new WebSocket(`wss://${baseUrl}/ws`);
 
     socket.onmessage = (event) => {
       this.messageSubject.next(JSON.parse(event.data));
