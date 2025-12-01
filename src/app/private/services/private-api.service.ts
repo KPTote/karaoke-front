@@ -12,18 +12,33 @@ export class PrivateApiService {
 
 
   public getPlaylist(): Observable<PlaylistRes[]> {
-    return this.http.get<PlaylistRes[]>('http://localhost:3000/api/playlist');
+    return this.http.get<PlaylistRes[]>('http://localhost:3000/api/playlist', {
+      headers: this.token()
+    });
   }
 
-  public updateSong(song: AddSongRequest): Observable<any>{
-    return this.http.put<any>('http://localhost:3000/api/edit-song', song)
+  public updateSong(song: AddSongRequest): Observable<any> {
+    return this.http.put<any>('http://localhost:3000/api/edit-song', song, {
+      headers: this.token()
+    })
   }
 
-  public clearPlaylist(): Observable<any>{
-    return this.http.delete<any>('http://localhost:3000/api/clear-playlist')
+  public clearPlaylist(): Observable<any> {
+    return this.http.delete<any>('http://localhost:3000/api/clear-playlist', {
+      headers: this.token()
+    })
   };
 
-  public auth(email: string, password: string): Observable<LoginResponse>{
-    return this.http.post<LoginResponse>('http://localhost:3000/api/auth/login', {email, password});
+  public auth(email: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>('http://localhost:3000/api/auth/login', { email, password }, {
+      headers: this.token()
+    });
   }
+
+  private token(): { [key: string]: string } {
+    const token = sessionStorage.getItem('token') ?? '';
+    return {
+      'Authorization': `Bearer ${token}`
+    }
+  };
 }

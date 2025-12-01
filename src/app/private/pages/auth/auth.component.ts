@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { AlertComponent } from "../../../components/alert/alert.component";
 import { LoaderComponent } from "../../../components/loader/loader.component";
 import loginField from '../../data/login-fields.json';
 import { PrivateApiService } from '../../services/private-api.service';
@@ -9,7 +11,7 @@ import { PrivateApiService } from '../../services/private-api.service';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [ReactiveFormsModule, LoaderComponent, CommonModule],
+  imports: [ReactiveFormsModule, LoaderComponent, CommonModule, AlertComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
@@ -19,9 +21,11 @@ export class AuthComponent {
   private readonly maxLengthEmail = 100;
   private readonly minLengthPass = 8;
   isValidAccount = true;
-  errorMessage = '';
   public showLoader = false;
   public loginFields = loginField;
+  public errorMessage = '';
+  public showAlert = false;
+  public typeAlert = 'error';
 
   private readonly fb = inject(FormBuilder);
   private readonly privateApiService = inject(PrivateApiService);
@@ -49,28 +53,24 @@ export class AuthComponent {
       return;
     };
 
-    console.log(this.loginForm.valid);
-
+    this.showAlert = false;
+    this.showLoader = true;
     const email = this.email?.value ?? '';
     const password = this.password?.value ?? '';
 
-
-
     this.privateApiService.auth(email, password)
+      .pipe(finalize(() => this.showLoader = false))
       .subscribe({
         next: res => {
           sessionStorage.setItem('token', res.token);
           this.router.navigate(['/private/dashboard']);
-
         },
-        error: error => console.log(error)
+        error: error => {
+          this.showAlert = true;
+          this.errorMessage = error?.error?.error ?? 'Error al obtener respuesta.'
+
+        }
       })
-
-
-
-
-
-
 
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-loader',
@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
 
-<div class="loader-container">
-   <div class="spinner" aria-live="polite" aria-label="Cargando"></div>
+<div class="loader-container" [class.loader-container__login]="loginLoader()" >
+   <div class="spinner" [class]="{ 'spinner-login': loginLoader(), 'spinner-normal': !loginLoader()}" aria-live="polite" aria-label="Cargando"></div>
 </div>
 
 
@@ -15,12 +15,25 @@ import { Component } from '@angular/core';
   styles: `
 
   .spinner{
-    width: 50px;
-    height: 50px;
     border: 5px solid #fffc;
     border-top-color: #0066FF;
     border-radius: 100%;
     animation: spin 1s infinite;
+  }
+
+  .loader-container__login{
+    display: grid;
+    justify-content: center;
+  }
+
+    .spinner-normal{
+    width: 50px;
+    height: 50px;
+  }
+
+  .spinner-login{
+        width: 50px;
+    height: 50px;
   }
 
   @keyframes spin{
@@ -30,7 +43,7 @@ import { Component } from '@angular/core';
   }
 
   @media only screen and (min-width: 600px){
-      .spinner{
+     .spinner-normal{
     width: 150px;
     height: 150px;
   }
@@ -39,5 +52,7 @@ import { Component } from '@angular/core';
   `
 })
 export class LoaderComponent {
+
+  loginLoader = input<boolean>();
 
 }
