@@ -77,13 +77,20 @@ export class CurrentListComponent implements OnInit, AfterViewInit {
             artistName: e.payload?.artistName ?? '',
             numberOnList: e.payload?.numberOnList ?? ''
           }
-        })
+        }),
       )
       .subscribe({
         next: message => {
-          this.songList$.push(message)
-          this.clonePlaylist();
-          console.log(message);
+
+          const songExists = this.songList$.some(song => song.numberOnList === message.numberOnList);
+
+          if (!songExists) {
+
+            this.songList$.push(message);
+            this.clonePlaylist();
+          }
+
+
         },
         error: error => {
           console.log(error);
@@ -111,14 +118,14 @@ export class CurrentListComponent implements OnInit, AfterViewInit {
   private addToStorage(songId: number, action: string): void {
 
     if (action === 'completed') {
-      if(this.completedArr.includes(songId)) return;
+      if (this.completedArr.includes(songId)) return;
       const deletedIndex = this.deletedArr.indexOf(songId);
       if (deletedIndex !== -1) this.deletedArr.splice(deletedIndex, 1);
       this.completedArr.push(songId);
     }
 
     if (action === 'deleted') {
-      if(this.deletedArr.includes(songId)) return;
+      if (this.deletedArr.includes(songId)) return;
       const completedIndex = this.completedArr.indexOf(songId);
       if (completedIndex !== -1) this.completedArr.splice(completedIndex, 1);
       this.deletedArr.push(songId);
