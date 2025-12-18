@@ -1,16 +1,14 @@
 import { Routes } from "@angular/router";
 import { confirmationFormGuard } from "./guards/confirmation-form.guard";
-import { ConfirmationFormComponent } from './pages/confirmation-form/confirmation-form.component';
-import { UserFormComponent } from "./pages/user-form/user-form.component";
 
 export const publicRoutes: Routes = [
   {
     path: 'user-form',
-    component: UserFormComponent
+    loadComponent: () => import('./pages/user-form/user-form.component').then( c => c.UserFormComponent)
   },
   {
     path: 'confirmation-form',
-    component: ConfirmationFormComponent,
+    loadComponent: () => import('./pages/confirmation-form/confirmation-form.component').then(c => c.ConfirmationFormComponent),
     canActivate: [confirmationFormGuard]
   },
   {

@@ -1,10 +1,5 @@
 import { Routes } from "@angular/router";
 import { dashboardGuard } from "./guards/dashboard.guard";
-import { AuthComponent } from "./pages/auth/auth.component";
-import { CurrentListComponent } from "./pages/current-list/current-list.component";
-import { DashboardComponent } from "./pages/dashboard/dashboard.component";
-import { EditSongComponent } from "./pages/edit-song/edit-song.component";
-import { HistoryComponent } from "./pages/history/history.component";
 import { currentListResolver } from "./resolvers/current-list.resolver";
 import { historyResolver } from "./resolvers/history.resolver";
 
@@ -12,31 +7,31 @@ import { historyResolver } from "./resolvers/history.resolver";
 export const privateRoutes: Routes = [
   {
     path: '',
-    component: AuthComponent
+    loadComponent: () => import('./pages/auth/auth.component').then(c => c.AuthComponent)
   },
   {
     path: 'dashboard',
     canActivate: [dashboardGuard],
-    component: DashboardComponent,
+    loadComponent: () => import('./pages/dashboard/dashboard.component').then(c => c.DashboardComponent),
     title: 'Dashboard',
     children: [
       {
         path: 'current-list',
-        component: CurrentListComponent,
+        loadComponent: () => import('./pages/current-list/current-list.component').then( c => c.CurrentListComponent),
         resolve: {
           playlist: currentListResolver
         }
       },
       {
         path: 'history',
-        component: HistoryComponent,
+        loadComponent: () => import('./pages/history/history.component').then( c => c.HistoryComponent),
         resolve: {
           playlist: historyResolver
         }
       },
       {
         path: 'edit-song',
-        component: EditSongComponent
+        loadComponent: () => import('./pages/edit-song/edit-song.component').then( c => c.EditSongComponent)
       },
       {
         path: '**',
