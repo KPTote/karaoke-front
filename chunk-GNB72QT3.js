@@ -1,0 +1,1 @@
+import{r as i}from"./chunk-W24PC3UI.js";var a=class t{transform(r){return r.trim().charAt(0).toUpperCase()+r.slice(1)}static \u0275fac=function(e){return new(e||t)};static \u0275pipe=i({name:"capitalize",type:t,pure:!0,standalone:!0})};export{a};
